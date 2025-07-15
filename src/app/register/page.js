@@ -50,23 +50,28 @@ export default function RegisterPage() {
     }
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // For demo purposes, accept any registration
-      if (formData.email && formData.password && formData.username) {
-        const userData = {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: formData.username,
           email: formData.email,
-          name: formData.username,
+          password: formData.password,
           discordUsername: formData.discordUsername,
-          role: 'player'
-        };
-        
-        login(userData);
-        window.location.href = '/dashboard';
-      } else {
-        setError('Please fill in all required fields');
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || 'Registration failed. Please try again.');
+        return;
       }
+
+      await login(data.user, data.token);
+      window.location.href = '/dashboard';
     } catch (err) {
       setError('Registration failed. Please try again.');
     } finally {

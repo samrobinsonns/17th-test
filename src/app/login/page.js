@@ -28,22 +28,26 @@ export default function LoginPage() {
     setError('');
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // For demo purposes, accept any login
-      if (formData.email && formData.password) {
-        const userData = {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           email: formData.email,
-          name: formData.email.split('@')[0],
-          role: 'player'
-        };
-        
-        login(userData);
-        window.location.href = '/dashboard';
-      } else {
-        setError('Please fill in all fields');
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || 'Login failed. Please try again.');
+        return;
       }
+
+      await login(data.user, data.token);
+      window.location.href = '/dashboard';
     } catch (err) {
       setError('Login failed. Please try again.');
     } finally {

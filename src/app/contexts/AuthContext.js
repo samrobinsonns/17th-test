@@ -17,12 +17,30 @@ export function AuthProvider({ children }) {
     setIsLoading(false);
   }, []);
 
-  const login = (userData) => {
-    localStorage.setItem('user', JSON.stringify(userData));
-    setUser(userData);
+  const login = async (userData, token) => {
+    const userWithToken = { ...userData, token };
+    localStorage.setItem('user', JSON.stringify(userWithToken));
+    setUser(userWithToken);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const { token } = JSON.parse(userData);
+      if (token) {
+        try {
+          await fetch('/api/auth/logout', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+        } catch (error) {
+          console.error('Logout error:', error);
+        }
+      }
+    }
     localStorage.removeItem('user');
     setUser(null);
   };
