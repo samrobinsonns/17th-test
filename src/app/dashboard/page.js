@@ -5,25 +5,36 @@ import Link from 'next/link';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function DashboardPage() {
-  const { user, logout } = useAuth();
+  const { user, logout, isLoading: authLoading } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    console.log('Dashboard: user state:', user);
+    console.log('Dashboard: authLoading state:', authLoading);
+    
+    // Wait for auth to finish loading
+    if (authLoading) {
+      console.log('Dashboard: Auth still loading, waiting...');
+      return;
+    }
+    
     // Check if user is logged in
     if (!user) {
+      console.log('Dashboard: No user found, redirecting to login');
       window.location.href = '/login';
       return;
     }
 
+    console.log('Dashboard: User authenticated, showing dashboard');
     setIsLoading(false);
-  }, [user]);
+  }, [user, authLoading]);
 
   const handleLogout = () => {
     logout();
     window.location.href = '/';
   };
 
-  if (isLoading) {
+  if (isLoading || authLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>

@@ -11,14 +11,28 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     // Check for existing user data on app load
     const userData = localStorage.getItem('user');
+    console.log('AuthContext: Loading user data from localStorage:', userData);
+    
     if (userData) {
-      setUser(JSON.parse(userData));
+      try {
+        const parsedUser = JSON.parse(userData);
+        console.log('AuthContext: Parsed user data:', parsedUser);
+        setUser(parsedUser);
+      } catch (error) {
+        console.error('AuthContext: Error parsing user data:', error);
+        localStorage.removeItem('user');
+      }
     }
     setIsLoading(false);
   }, []);
 
   const login = async (userData, token) => {
-    const userWithToken = { ...userData, token };
+    const userWithToken = { 
+      ...userData, 
+      token,
+      name: userData.username || userData.name // Ensure name field exists
+    };
+    console.log('AuthContext: Logging in user:', userWithToken);
     localStorage.setItem('user', JSON.stringify(userWithToken));
     setUser(userWithToken);
   };
