@@ -12,6 +12,113 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Dark mode support */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+/* Custom dark mode classes */
+.dark .bg-white {
+  background-color: #1f2937 !important;
+}
+
+.dark .text-gray-900 {
+  color: #ffffff !important;
+}
+
+.dark .text-gray-600 {
+  color: #9ca3af !important;
+}
+
+.dark .text-gray-500 {
+  color: #6b7280 !important;
+}
+
+.dark .border-gray-200 {
+  border-color: #374151 !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: #374151 !important;
+}
+
+.dark .bg-gray-50 {
+  background-color: #1f2937 !important;
+}
+
+.dark .text-gray-800 {
+  color: #f3f4f6 !important;
+}
+
+.dark .text-gray-400 {
+  color: #9ca3af !important;
+}
+
+.dark .bg-gray-800 {
+  background-color: #1f2937 !important;
+}
+
+.dark .border-gray-700 {
+  border-color: #374151 !important;
+}
+
+.dark .bg-gray-700 {
+  background-color: #374151 !important;
+}
+
+.dark .border-gray-600 {
+  border-color: #4b5563 !important;
+}
+
+.dark .text-red-400 {
+  color: #f87171 !important;
+}
+
+.dark .text-red-600 {
+  color: #f87171 !important;
+}
+
+.dark .bg-red-100 {
+  background-color: #7f1d1d !important;
+}
+
+.dark .text-red-800 {
+  color: #fca5a5 !important;
+}
+
+.dark .bg-red-900 {
+  background-color: #7f1d1d !important;
+}
+
+.dark .text-red-200 {
+  color: #fca5a5 !important;
+}
+
+.dark .bg-green-100 {
+  background-color: #14532d !important;
+}
+
+.dark .text-green-800 {
+  color: #86efac !important;
+}
+
+.dark .bg-yellow-100 {
+  background-color: #713f12 !important;
+}
+
+.dark .text-yellow-800 {
+  color: #fde047 !important;
+}
+
+.dark .bg-yellow-900 {
+  background-color: #713f12 !important;
+}
+
+.dark .text-yellow-200 {
+  color: #fde047 !important;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
